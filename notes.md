@@ -1,7 +1,8 @@
 # Breathing in Game
 
 Putting bio-rythyms on the screen could really help the feeling of embodiment.
-Instead of some singular meter, I think it should be a game session object which all game objects can refer to when cycling through visual effects.
+As you suggested before a hud meter seems inappropriate.
+Instead some game session object which all game objects can refer to when cycling through visual effects seems more apt.
 This way the user can intuit the rythym without breaking attention from the avatar.
 
 ## Breathing
@@ -32,7 +33,7 @@ We should just shelve it for now... But if we do go after it;
 
 ## Bio-Sensor
 
-  - Most embodied and accurate, but adds hardware needs- defeating one of the main objectives of the project!
+  - Most accurate, but adds hardware needs- defeating one of the main objectives of the project!
   - but really cool; imagine background trees cycling through the seasons with the cycles of your breath.
   - a heart monitor could give awesome feedback for exertion targets;
     - if the rate gets too high or low, switch game modes to higher/lower exertion modes
@@ -41,31 +42,57 @@ We should just shelve it for now... But if we do go after it;
   - WebSerial could be an avenue on chromium? 
   - Watch/fitness band apps? These things are getting more common...
 
-# Rythm Game Effects
+# Breathing Rythym
+
+- 4 phases
+  - Exhale
+  - wait
+  - inhale
+  - hold
+- currently using a crude sinusoidal easing
+- should you be able to dynamically alter each phase duration?
+  - does it immediately take effect and if so what about boundary conditions?
+  - does it schedule the change for the next cycle?
+
+# Rythym Game Effects
 
 What should these rythyms affect on screen?
 
-## Fractal Plants
+I think having the Player's avatar interact with a simulation or generative fractal would be a strong tool to making the Player feel thier body is part of the game.
+
+The style of control you give the Player over the simulation could have a strong proteus effect as well; Do you hand them a hammer or a fan?
+
+## Fern Fractal
 
  - We could use an IFS to draw plants on the screen
  - every inhale could cause the stems to grow and fork
- - limb position and/or relative angle could alter the direction limbs are growing, and to a lesser extent, move the existing stems
+ - Player limb position and/or relative angle could alter the direction limbs are growing, and to a lesser extent, move the existing stems
  - goal could be to guide the plants to open space and light as shadows are cast on the plant.
+ - different species of plant will have different growth patterns to control
  - this mode implies breath control and balancing/stretching the body in reaching poses...
+
+ ![fern fractal](./img/fern.jpg)
 
 ## Compressible Fluid
 
  - breathing cycles trees through seasons. Every Fall/exhale drops leaves.
  - we could put avatar in a compressible liquid simulation where their limbs chould shed vortices and flutter the leaves.
- - playfuly keep leaves in the air, or knock down piles with Shyrukens of air.
+ - playfuly keep leaves in the air, or knock down piles with Hadoukens of air.
  - this mode implies a more active session with taichi-like round motions
+
+![Autumn wind](./img/autumnWind.jpg)
 
 ## Sand Simulation
 
  - Sand pours on the user's head, off shoulders and down their arms, building hills on the ground
  - cover the monuments of lemurian civilizations
  - dig them back up after the ecological shift of an epoch
- - this mode implies more methodical motions, with arched poses, focused downwards.
+ - this mode implies more methodical motions, with arched poses, focused downwards. Horse stance for endurance training?
+
+ ![sand approaches ruins](./img/sandRuins.png)
+ https://www.flickr.com/photos/dpicto/21185589974/
+
+## incompressible fluid 
 
 ## N-body Gravitation
 
@@ -77,11 +104,20 @@ What should these rythyms affect on screen?
   - top-down, user is in center of spiral?
   - small angle above the plane of the system, so user can see small, distant bodies travelling the opposite direction before they enter on the interactive foreground?
   - both?
-- This would be an active and unpredicable session with more exertion; gravity produces non-linear and rapid motions.
+- This would be an active and unpredicable session with more exertion; gravity produces chaotic and rapid motions.
+
+![moon disturbing the rings of Saturn](./img/disturbedSaturnRing.jpg)
 
 ## Ray-marched Modulo Fractals
 
+https://www.youtube.com/watch?v=N8WWodGk9-g
+
+https://www.youtube.com/watch?v=9U0XVdvQwAI
+
+https://www.youtube.com/watch?v=svLzmFuSBhk
+
 - Like IFS fractals but solid and infinite, very psychadelic!
+- Can be real-time but you need a graphics card, not sure how strong, lol.
 - Like IFS use limb orientations as coefficient values
 - Awesome examples from the dev of 'Hyperbolica'.
 - The game could be based around a posing your body to explore the space;
@@ -90,6 +126,20 @@ What should these rythyms affect on screen?
   - breathing will slightly rotate the configuration, making it look like the world is breathing as well.
   - Warm/cold feedback can come from color changes as the user gets closer to the correct pose.
 - This game state would be based around mind-body connection because they have to individually move specific limbs in specific directions to 'travel' on the psychic plane.
+
+![non-interactive speed raycasting](./img/raymarchedFractal.jpg)
+http://blog.hvidtfeldts.net/index.php/2015/01/path-tracing-3d-fractals/
+
+## Cohomology fractals
+
+https://www.youtube.com/watch?v=fhBPhie1Tm0
+
+pretty sure the second half of this video is a troll...
+
+https://henryseg.github.io/cohomology_fractals/
+
+- Fast New fractal developed by Henry Segerman and co.
+- might be worth brainstorming how this could be a playspace...
 
 # Miscellany
 
@@ -102,3 +152,11 @@ What should these rythyms affect on screen?
   - measure on-screen limb length and scale all subesequent target poses accordingly.
   - should work as long as user doesn't move closer/further from screen;
     - Oh, you could also actively scale targets periodically updating limb-lengths for any poses perpendicular to the camera direction.
+
+- Limb position has jitter which gives a tense feeling!
+  - we might want to use some smoothing (time average or alpha-beta) to 'soothe' this
+
+- Limb occlusion makes limb position jump!
+  - discard position outliers?
+  - identify sideways bodies when torso width is thin?
+
