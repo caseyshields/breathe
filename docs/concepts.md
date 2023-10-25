@@ -1,9 +1,9 @@
 # Breathing in Game
 
 Putting bio-rhythms on the screen is a really neat way to embody the Player in the game avatar.
-As you suggested before, a hud meter seems inappropriate for this.
-Instead we could have some global timer which all game objects can refer to. Game objects could then synchronize motions or properties with this cycle.
-This way the user can intuit the rhythm without breaking attention from the avatar or game world.
+To help with this immersion, game objects might synchronize their properties with this cycle.
+The user can then intuit the rhythm without breaking attention from the avatar or game world.
+Architecturally, this implies a single point of reference in the game session which any component can look up the current value.
 
 - Breathing
   - Rate is voluntary so avatar can lead player
@@ -13,36 +13,7 @@ This way the user can intuit the rhythm without breaking attention from the avat
     - does it immediately take effect and if so what about boundary conditions?
     - does it schedule the change for the next cycle?
 
-- Heartbeat
-  - intermittent double pulse
-  - rate is not voluntary
-  - more likely for user to perceive it while holding breath...
-
-On the downside we can't synchronize these with the player's actual rhythms.
-This is less an issue with breathing, as the player is using it as a target.
-But the heart rate is not voluntary! 
-
-What should these rhythms affect on screen?
-
-# Heartbeat Solutions;
-
-We should just shelve it for now... But if we do go after it;
-
-- Heartrate calibration
-  - After exertion, Enter mini-game state where raising arms controls game heart-rate. User has to synchronize pulses while listening to their body.
-  - Downside is if exertion level changes the heart-rate will be off, leading to the same disembodiment.
-  - We could make heart rate a very slight game effect, but ramp it up during these stages?
-  - It would provide good data points over time of heart-rate variability; an important health metric.
-
-- Bio-Sensor
-  - Most accurate, but adds hardware needs- defeating one of the main objectives of the project!
-  - but really cool; imagine background trees cycling through the seasons with the cycles of your breath.
-  - a heart monitor could give awesome feedback for exertion targets;
-    - if the rate gets too high or low, switch game modes to higher/lower exertion modes
-    - This way you can keep the player in specific cardio zones
-      - Very good for player's physical health as well!
-  - WebSerial could be an avenue on chromium? 
-  - Watch/fitness band apps? These things are getting more common...
+What should this rhythm affect on screen?
 
 # Simulation / Generative Fractals
 
@@ -193,24 +164,4 @@ If you carefully limit the N-body simulation it is achievable, but not sure how 
 
 Anything that requires WebGL could be a bit of a learning curve and add hardware requirements.
 Also, I think it has a greater potential for novel interactivity.
-
-
-# Miscellany
-
-- Where do I add the Breathing module in the architecture?
-  - child of game session since most everything must know it?
-
-- I noticed the target placement problem with my wide angle camera! Possible solution;
-  - Have a subtle calibration where the avatar instructs the user to enter a 'T' or 'X' pose
-    - Instructed to reach as wide as possible onscreen, subtly forcing the Player to get in the image plane of the camera.
-  - measure on-screen limb length and scale all subsequent target poses accordingly.
-  - should work as long as user doesn't move closer/further from screen;
-    - Oh, you could also actively scale targets periodically updating limb-lengths for any poses perpendicular to the camera direction.
-
-- Limb position has jitter which gives a tense feeling!
-  - we might want to use some smoothing (time average or alpha-beta)
-
-- Limb occlusion makes limb position jump!
-  - discard position outliers?
-  - identify sideways bodies when torso width is thin?
 
