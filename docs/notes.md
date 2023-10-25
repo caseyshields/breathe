@@ -32,6 +32,12 @@
 
 - setup and cleanup calls often appear extraneous.
 
+- flash of unstyled text; we could block until we load font...
+
+- we need a layer manager?
+
+# Heartbeat Solutions;
+
 - Heartbeat is another bio-rhythm which we might try to embody on the screen 
   - intermittent double pulse
   - rate is not voluntary
@@ -40,8 +46,6 @@
 On the downside we can't synchronize these with the player's actual rhythms.
 This is less an issue with breathing, as the player is using it as a target.
 But the heart rate is not voluntary!
-
-# Heartbeat Solutions;
 
 We should just shelve it for now... But if we do go after it;
 
