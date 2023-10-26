@@ -18,7 +18,7 @@
 
 - the manager base class supplies the singleton objects P5 and Session. Rather than getting these through the class hierarchy, we could just import them as needed in concrete implementations. Could reduce code complexity and make testing easier. Disregard this if managers will supply additional abstract behavior.
 
-- testing game objects currently requires spinning up the whole environment; we might benefit from a lighter testing harness for some components; for example testing a single game object.
+- testing game objects currently requires spinning up the whole environment; we might benefit from a lighter testing harness for some components; for example testing a single game object, or animating a demo skeleton that doesn't use media pipe.
 
 - Collision BB is assumed at root game object. Rotation and scale assumed at base game object; However exceptions exist. consider particles which have no dimensions. Should we add more game object types to avoid shoehorning? Or is this preoptimization?
 
