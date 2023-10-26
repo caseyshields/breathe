@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>p5.js example</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      background-color: #1b1b1b;
+      color: aliceblue;
+    }
+  </style>
+  <script src="../p5/p5.min.js"></script>
+  <!-- <script src="../addons/p5.sound.js"></script> -->
+  <script src="./julia.js"></script>
+</head>
+
+<body>
+  <h1>Julia Set</h1>
+  <main>
+  </main>
+  <aside>
+    <ul>
+      <li>Needs to be fast as possible; we can tweak resolution, iteration limit, escape limit, simplify coloring functions, etc</li>
+    <li>Works by directly setting pixels in a P5 image. Using a shader might be faster...</li>
+    <li>some coloring ideas; <a href="https://en.wikipedia.org/wiki/Plotting_algorithms_for_the_Mandelbrot_set#Escape_time_algorithm">wikipedia</a></li>
+    <li>I used an alternate approach here, just applying a different modulus to each channel. Gives a similar banded appearance, but with fewer operations.</li>
+    <li>we might update the coloring functions to match breath rate, making bands move and brighten with the breath...</li>
+    <li>In this example, if you see red, than it means there were more iterations, and the image is more expensive!</li>
+    <li>Fine details are pixelated; we might cast more rays into red areas to refine them is we have cycles to spare.</li>
+    <li>Need to add camera controls and fine control point controls!</li>
+    <li>Using could place targets on the control points of 'deep' images for our 'souvenir'!</li>
+    <li>An awesome fractal collection by <a href="https://paulbourke.net/fractals/">Paul Bourke</a></li>
+    </ul>
+  </aside>
+</body>
+
+</html>
