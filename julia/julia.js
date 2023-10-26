@@ -33,7 +33,7 @@ function draw() {
   // TODO don't re-render if the mouse hasn't changed...
   let cx = map(mouseX,0,width,-r,r);
   let cy = map(mouseY,0,height,-r,r);
-
+  let a2, b2;
   let n=0;
   fractal.loadPixels();
   for (let y=0; y<height; y++) {
@@ -43,21 +43,23 @@ function draw() {
       let b = map(y,0,height,-r,r);
       let iteration = 0;
       do {
-        a1 = a*a - b*b + cx;
-        b1 = 2*a*b + cy;
+        a2 = a*a;
+        b2 = b*b;
+        ta = a2 - b2 + cx;
+        tb = 2*a*b + cy;
         iteration ++;
-        a = a1;
-        b = b1;
-      } while ( (a*a) + (b*b) < 1e10//(r*r) 
+        a = ta;
+        b = tb;
+      } while ( a2 + b2 < 1e10//(r*r) 
           && iteration < maxIteration)
 
       // apparently image.set is slower...
       // fractal.set(x,y, 'purple');
 
-      iteration = iteration % 255; //Math.sqrt(iteration);
-      fractal.pixels[n] = 0;
-      fractal.pixels[n+1] = iteration;
-      fractal.pixels[n+2] = 0;
+      // iteration = iteration % 255; //Math.sqrt(iteration);
+      fractal.pixels[n] = iteration%255;
+      fractal.pixels[n+1] = 64 * (iteration % 3);
+      fractal.pixels[n+2] = 16 * (iteration % 9);
       fractal.pixels[n+3] = 255;
       n+=4;
     }
