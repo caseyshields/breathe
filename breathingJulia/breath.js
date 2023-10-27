@@ -74,7 +74,7 @@ export default class BreathingManager {
     play() { this.#running = true; }
 
     /** @returns a number in [0,1] representing the current volume of the lungs */
-    get breath() { return this.#breath; }
+    get value() { return this.#breath; }
 
     /** @return {Number} the duration in ms */
     get inhale() { return this.#inhale; }
