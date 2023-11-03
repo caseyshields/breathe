@@ -34,7 +34,22 @@
 
 - flash of unstyled text; we could block until we load font...
 
-- we need a layer manager?
+- do we need a layer manager?
+
+- index creates and add all fields to gamesession? Why not create them in game session?
+
+- mouse handler stubs in the declaration of the P5 instance in index.js- are they vestigial?
+
+- how do resize events propagate? Oh! the P5 instance calls State.resize() on the current state.
+  - does it need to be propagated to the other States on the stack?
+
+- awkward to iterate through bones and joints, can we improve this or should I just build rendering into the skeleton...
+
+- two copies of P5? One in "./public/scripts/libs/p5/p5.js" an also "./public/scripts/p5/p5.js".
+
+- just pause the game if you can't see the whole torso
+
+- I think I'm doing the motion blur wrong; I should just make the skelton look like the silhouette and have in render into that cumulative image buffer...
 
 # Heartbeat Solutions;
 
