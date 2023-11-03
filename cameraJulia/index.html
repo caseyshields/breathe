@@ -14,14 +14,15 @@
     }
   </style>
   <script src="../p5/p5.min.js"></script>
-  <script src="./breath.js"></script>
+  <script type="module" src="./breath.js"></script>
   <!-- <script src="../addons/p5.sound.js"></script> -->
-  <script src="./julia.js"></script>
+  <script type="module" src="./julia.js"></script>
+
 </head>
 
 <body>
   <h1>Julia Set</h1>
-  <main>
+  <main id="sketch">
   </main>
   <aside>
     <ul>
@@ -33,5 +34,32 @@
     </ul>
   </aside>
 </body>
+
+<script type="module">
+  import Breath from "./breath.js"
+
+  const s = (p5) => {
+    let width = 512;
+    let height = 512;
+    let emptyColor = p5.color(0,255,0);
+    let fullColor = p5.color(0,0,255);
+    let breathing = new Breath(2000,2000,2000,2000);
+
+    p5.setup = function() {
+      p5.frameRate(30);
+      p5.createCanvas(width, height);
+      p5.pixelDensity(1);
+      breathing.play();
+    }
+    p5.draw = function() {
+      breathing.update(p5.deltaTime);
+      let value = breathing.value;
+      p5.stroke(0,0);
+      p5.fill( p5.lerpColor(emptyColor, fullColor, (value+1)/2) );
+      p5.circle(width/2, height/2, 100 + (100*value));
+    }
+  }
+  let sketch = new p5(s, "#sketch")
+</script>
 
 </html>

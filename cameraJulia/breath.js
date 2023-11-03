@@ -1,5 +1,5 @@
 /** @class BreathingManager meters out breathing. */
-export default class BreathingManager {
+export default class Breath {
 
     // should we track the number of breaths for sustained targets and such?
 
@@ -19,7 +19,6 @@ export default class BreathingManager {
      * @param {Number} wait duration in milliseconds
     */
     constructor(inhale, hold, exhale, wait) {
-        super();
         this.#time = 0; // the current time in ms in the current cycle of breath
         this.#breath = 0; // a Number in [0,1] that represents the current lung volume
         this.#phase = []; // the end of each phase in ms in one cycle of breath
