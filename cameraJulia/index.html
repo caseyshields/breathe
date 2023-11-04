@@ -25,6 +25,7 @@
   <main id="sketch">
   </main>
   <aside>
+    <div id="mouseCoordinates"></div>
     <ul>
       <li>pan camera by dragging left mouse</li>
       <li>scale image with mousewheel</li>
@@ -39,6 +40,8 @@
   import Breath from "./breath.js";
   import Julia from "./julia.js";
 
+  let coordinates = document.getElementById("mouseCoordinates");
+
   const s = (p5) => {
     let width = 512;
     let height = 512;
@@ -46,20 +49,23 @@
     let fullColor = p5.color(0,0,255);
     let breathing = new Breath(2000,2000,2000,2000);
     let julia = new Julia(p5, width, height);
-    let zoom = 1;
+    let zoom = 1; // should this just be just be part of julia...
 
     p5.setup = function() {
       p5.frameRate(10);
       p5.createCanvas(width, height);
       p5.pixelDensity(1);
 
-      julia.setPosition(0,0);
-      julia.setControl(-0.55, -0.55);
+      julia.position = [0,0];
+      julia.control = [-0.55, -0.55];
       //julia.setScale();
 
       breathing.play();
     }
     p5.draw = function() {
+      // let [r,i] = julia.position;
+      // julia.position = [zoom*(r + p5.movedX)/width, zoom*(i + p5.movedY)/width];
+
       breathing.update(p5.deltaTime);
       julia.update();
       p5.image(julia.image,0,0);
@@ -70,6 +76,18 @@
       else if (event.delta>0)
         zoom *= 1.1;
       julia.scale = zoom / width;
+    }
+    p5.mouseDragged = function(event){
+      // TODO track total drag of left and right buttons
+    }
+    p5.mouseMoved = function(event) {
+      let M = [p5.mouseX, p5.mouseY];
+      let I = julia.screenToImage(M);
+      let M2 = julia.imageToScreen(I);
+      if (M[0]!=M2[0] || M[1]!=M2[1])
+        console.error(M,I,M2);
+      // console.log(M,I,M2);
+      coordinates.innerText = "(r,i) = ["+I[0]+", "+I[1]+"]";
     }
   }
   let sketch = new p5(s, "#sketch")

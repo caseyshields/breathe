@@ -74,17 +74,30 @@ export default class Julia {
     this._image.updatePixels();
   }
 
+  imageToScreen([r,i]) {
+    return [(r/this._scale)+this._width, 
+        (i/-this._scale)+this._height];
+  }
+  screenToImage([x,y]) {
+    return [(x-this._width)*this._scale, 
+        (y-this._height)*-this._scale];
+  } // I might just want to switch to using P5 vectors and matrices...
+
   /** Position of the center of the image in the complex plane.
    * @param {Number} r the real or horizontal part.
    * @param {Number} i the imaginary or vertical part.
    */
-  setPosition(r,i) {
+  set position([r,i]) {
     this._Or = r;
     this._Oi = i;
   }
 
+  get position() {
+    return [this._Or,this._Oi];
+  }
+
   /**  */
-  setControl(r,i) {
+  set control([r,i]) {
     this._Cr = r;
     this._Ci = i;
   }
