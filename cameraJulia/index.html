@@ -26,12 +26,13 @@
   </main>
   <aside>
     <div id="mouseCoordinates"></div>
+    <div id="origin"></div>
+    <div id="control"></div>
+    <div id="scale"></div>
     <ul>
       <li>pan camera by dragging left mouse</li>
       <li>scale image with mousewheel</li>
       <li>move control point by dragging right mouse</li>
-      <li>scale dragging motions using current scale</li>
-      <li>implement bounds?</li>
     </ul>
   </aside>
 </body>
@@ -41,6 +42,11 @@
   import Julia from "./julia.js";
 
   let coordinates = document.getElementById("mouseCoordinates");
+  let originDiv = document.getElementById("origin");
+  let controlDiv = document.getElementById("control");
+  let scaleDiv = document.getElementById("scale");
+  // TODO add an editable form to control fractal
+  // TODO URI arguments; why not?
 
   const s = (p5) => {
     let width = 512;
@@ -52,42 +58,63 @@
     let zoom = 1; // should this just be just be part of julia...
 
     p5.setup = function() {
-      p5.frameRate(10);
-      p5.createCanvas(width, height);
       p5.pixelDensity(1);
-
+      p5.frameRate(10);
+      const canvas = p5.createCanvas(width, height);
+      canvas.elt.addEventListener('contextmenu', (e)=>e.preventDefault());
+      
       julia.position = [0,0];
       julia.control = [-0.55, -0.55];
-      //julia.setScale();
+      julia.scale = 1/width;
 
       breathing.play();
     }
-    p5.draw = function() {
-      // let [r,i] = julia.position;
-      // julia.position = [zoom*(r + p5.movedX)/width, zoom*(i + p5.movedY)/width];
 
-      breathing.update(p5.deltaTime);
+    p5.draw = function() {
+      // project mouse gestures into the complex plane
+      if (p5.mouseIsPressed) {
+        let start = julia.screenToImage([p5.pmouseX, p5.pmouseY]);
+        let end = julia.screenToImage([p5.mouseX, p5.mouseY]);
+        let diff = [end[0]-start[0], end[1]-start[1]];
+        
+        // left mouse updates the position of the fractal
+        if (p5.mouseButton==p5.LEFT) {
+          let origin = julia.position;
+          julia.position = [origin[0]-diff[0], origin[1]+diff[1]];
+          originDiv.innerText = "origin = ("+julia.position[0]+", "+julia.position[1]+"i)";
+        }
+
+        // right mouse button updates the fractal's control point        
+        if (p5.mouseButton==p5.RIGHT) {
+          let origin = julia.control;
+          julia.control = [origin[0]-diff[0], origin[1]+diff[1]];
+          controlDiv.innerText = "control = ("+julia.control[0]+", "+julia.control[1]+"i)";
+        }
+      }
+
+      // update and draw the fractal
+      breathing.update(p5.deltaTime); // TODO figure out a way to connect breathing to this version of the fractal...
       julia.update();
       p5.image(julia.image,0,0);
     }
+    // the mousewheel updates the fractal zoom
     p5.mouseWheel = function(event) {
       if (event.delta<0)
         zoom *= 0.9;
       else if (event.delta>0)
         zoom *= 1.1;
       julia.scale = zoom / width;
+      scaleDiv.innerText = "scale = "+julia.scale;
     }
-    p5.mouseDragged = function(event){
-      // TODO track total drag of left and right buttons
-    }
+    // 
     p5.mouseMoved = function(event) {
       let M = [p5.mouseX, p5.mouseY];
       let I = julia.screenToImage(M);
       let M2 = julia.imageToScreen(I);
-      if (M[0]!=M2[0] || M[1]!=M2[1])
-        console.error(M,I,M2);
-      // console.log(M,I,M2);
-      coordinates.innerText = "(r,i) = ["+I[0]+", "+I[1]+"]";
+      coordinates.innerText = "mouse = ("+I[0]+", "+I[1]+"i)";
+      // DEBUG
+      // if (M[0]!=M2[0] || M[1]!=M2[1])
+      //   console.error(M,I,M2);
     }
   }
   let sketch = new p5(s, "#sketch")

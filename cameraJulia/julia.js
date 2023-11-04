@@ -102,12 +102,16 @@ export default class Julia {
     this._Ci = i;
   }
 
+  get control() { return [this._Cr, this._Ci]; }
+
   /** Sets the image scale
    * @param s the size of a pixel in the complex plane
    */
   set scale(s) {
     this._scale = s;
   }
+
+  get scale() { return this._scale; }
 
   get image() { return this._image; }
 
