@@ -61,14 +61,15 @@
     }
     p5.draw = function() {
       breathing.update(p5.deltaTime);
-
-
-
       julia.update();
-      julia.render(p5);
+      p5.image(julia.image,0,0);
     }
     p5.mouseWheel = function(event) {
-      console.log(event.delta);
+      if (event.delta<0)
+        zoom *= 0.9;
+      else if (event.delta>0)
+        zoom *= 1.1;
+      julia.scale = zoom / width;
     }
   }
   let sketch = new p5(s, "#sketch")
