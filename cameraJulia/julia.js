@@ -24,6 +24,7 @@ export default class Julia {
     this._image = p5.createImage(width,height);
   }
 
+  /** Renders an image of the fractal using the current origin, control and scale. */
   update() {
     let iteration; //
     let r2, i2; // temp vars for avoiding duplicate multiplications
@@ -74,10 +75,24 @@ export default class Julia {
     this._image.updatePixels();
   }
 
+  /** @returns {P5.image} the image of the fractal from the last time update() was called. */
+  get image() { return this._image; }
+
+  /** Converts an complex coordinate into an image coordinate
+   * @param {Number} r the real component of the image coordinate
+   * @param {Number} i the imaginary component of the image coordinate
+   * @returns {Number[]} The image coordinates with the origin in the top-left corner
+   * */
   imageToScreen([r,i]) {
     return [(r/this._scale)+this._width, 
         (i/-this._scale)+this._height];
   }
+
+  /** converts an image coordinate into the complex plane of the fractal
+   * @param {Number} x pixels from the left side of the image
+   * @param {Number} y pixels from the top of the image
+   * @return {Number[]} Complex coordinates relative to the fractal origin
+  */
   screenToImage([x,y]) {
     return [(x-this._width)*this._scale, 
         (y-this._height)*-this._scale];
@@ -96,7 +111,6 @@ export default class Julia {
     return [this._Or,this._Oi];
   }
 
-  /**  */
   set control([r,i]) {
     this._Cr = r;
     this._Ci = i;
@@ -107,17 +121,11 @@ export default class Julia {
   /** Sets the image scale
    * @param s the size of a pixel in the complex plane
    */
-  set scale(s) {
-    this._scale = s;
-  }
-
+  set scale(s) { this._scale = s; }
+  
+  /** @returns the size of a pixel in the complex plane */
   get scale() { return this._scale; }
 
-  get image() { return this._image; }
-
-
-  // TODO differential versions of these?
-  // TODO getters
-  // TODO image to plane coordinate transform and its inverse?
+  // TODO differential versions of the setters?
   // TODO resize image?
 }
