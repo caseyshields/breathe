@@ -26,17 +26,18 @@
   </main>
   <aside>
     <ul>
-    <li>pan camera by dragging left mouse</li>
-    <li>scale image with mousewheel</li>
-    <li>move control point by dragging right mouse</li>
-    <li>scale dragging motions using current scale</li>
-    <li>implement bounds?</li>
+      <li>pan camera by dragging left mouse</li>
+      <li>scale image with mousewheel</li>
+      <li>move control point by dragging right mouse</li>
+      <li>scale dragging motions using current scale</li>
+      <li>implement bounds?</li>
     </ul>
   </aside>
 </body>
 
 <script type="module">
-  import Breath from "./breath.js"
+  import Breath from "./breath.js";
+  import Julia from "./julia.js";
 
   const s = (p5) => {
     let width = 512;
@@ -44,19 +45,30 @@
     let emptyColor = p5.color(0,255,0);
     let fullColor = p5.color(0,0,255);
     let breathing = new Breath(2000,2000,2000,2000);
+    let julia = new Julia(p5, width, height);
+    let zoom = 1;
 
     p5.setup = function() {
-      p5.frameRate(30);
+      p5.frameRate(10);
       p5.createCanvas(width, height);
       p5.pixelDensity(1);
+
+      julia.setPosition(0,0);
+      julia.setControl(-0.55, -0.55);
+      //julia.setScale();
+
       breathing.play();
     }
     p5.draw = function() {
       breathing.update(p5.deltaTime);
-      let value = breathing.value;
-      p5.stroke(0,0);
-      p5.fill( p5.lerpColor(emptyColor, fullColor, (value+1)/2) );
-      p5.circle(width/2, height/2, 100 + (100*value));
+
+
+
+      julia.update();
+      julia.render(p5);
+    }
+    p5.mouseWheel = function(event) {
+      console.log(event.delta);
     }
   }
   let sketch = new p5(s, "#sketch")

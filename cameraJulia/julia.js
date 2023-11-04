@@ -20,7 +20,7 @@ export default class Julia {
     this.Ci = 0;
     this.scale = 2/this.width; // scaling factor from screen to complex plane
     this.escape = 1e10; // if the iterated function grows larger than this, we consider it divergent
-    this.maxIteration; // if the function iterates this many times we assume it never will
+    this.maxIteration = 512; // if the function iterates this many times we assume it never will
     this.image = p5.createImage(width,height);
   }
 
@@ -29,7 +29,7 @@ export default class Julia {
     let r2, i2; // temp vars for avoiding duplicate multiplications
     let r, i; // temp vars for the value of the iterated function
     
-    image.loadPixels();
+    this.image.loadPixels();
 
     // TODO
     // I'm trying to reduce the number of operations, just additions rather than a bunch of linear scaling. 
@@ -42,18 +42,18 @@ export default class Julia {
     while(Zi < Zimax) {
 
       let Zr = this.Or - (this.height*this.scale);
-      Zrmax = this.Or + (this.height*this.scale);
-      while (Zi < Zrmax) {
-        iteration = 0;
+      let Zrmax = this.Or + (this.height*this.scale);
+      while (Zr < Zrmax) {
 
         // measure how fast the complex iterated function for this pixel diverges
         r = Zr;
         i = Zi;
+        iteration = 0;
         do {
           r2 = r*r;
           i2 = i*i;
-          tZr = r2 - i2 + cx;
-          tZi = 2*r*i + cy;
+          let tZr = r2 - i2 + this.Cr;
+          let tZi = 2*r*i + this.Ci;
           iteration ++;
           r = tZr;
           i = tZi;
@@ -61,10 +61,11 @@ export default class Julia {
             && iteration < this.maxIteration)
 
         // map it to a color
-        fractal.pixels[n] = 0;
-        fractal.pixels[n+1] = 8*Math.abs((((32*breath.value)+iteration)%32)-16);
-        fractal.pixels[n+2] = 16*Math.abs((((16*breath.value)+iteration)%16)-8);
-        fractal.pixels[n+3] = 255;
+        let breathvalue = 0.5;
+        this.image.pixels[n] = 0;
+        this.image.pixels[n+1] = 8*Math.abs((((32*breathvalue)+iteration)%32)-16);
+        this.image.pixels[n+2] = 16*Math.abs((((16*breathvalue)+iteration)%16)-8);
+        this.image.pixels[n+3] = 255;
         // I think this can be more optimized...
         // TODO We need to remove the dependence on breath;
         // make color map offsets public fields?
@@ -85,7 +86,7 @@ export default class Julia {
    * @param g a P5 graphics context
   */
   render(g) {
-    g.image(this.image);
+    g.image(this.image,0,0);
   }
 
   /** Position of the center of the image in the complex plane.
@@ -96,7 +97,6 @@ export default class Julia {
     this.Or = r;
     this.Oi = i;
   }
-
 
   /**  */
   setControl(r,i) {
