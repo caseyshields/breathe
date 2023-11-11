@@ -35,7 +35,7 @@ Technologically there should be a lot of prior art, implemented in the browser.
  - different species of plant will have different growth patterns to control
  - this mode implies breath control and balancing/stretching the body in reaching poses...
 
- ![fern fractal](./img/fern.jpg)
+ ![fern fractal](../img/fern.jpg)
 
 ## Sand Simulation
 
@@ -47,7 +47,7 @@ Technologically there should be a lot of prior art, implemented in the browser.
  - dig them back up after the ecological shift of an epoch
  - this mode might imply more methodical motions, with arched poses, focused downwards. Horse stance for endurance training?
 
- ![sand approaches ruins](./img/sandRuins.png)
+ ![sand approaches ruins](../img/sandRuins.png)
 
  https://www.flickr.com/photos/dpicto/21185589974/
 
@@ -60,7 +60,7 @@ Technologically there should be a lot of prior art, implemented in the browser.
  - Playfully keep leaves in the air, or knock down piles with Hadoukens of air.
  - this mode implies a more active session with taichi-like round motions
 
-![Autumn wind](./img/autumnWind.jpg)
+![Autumn wind](../img/autumnWind.jpg)
 
 ## N-body Gravitation
 
@@ -76,11 +76,11 @@ Technologically there should be a lot of prior art, implemented in the browser.
 - Wandering black hole, moving between systems to feed?
 - This would be an active and unpredictable session with more exertion; gravity produces chaotic and rapid motions. Difficult to combine with static posing mechanic.
 
-![herbig haro object](./img/HH24.jpg)
+![herbig haro object](../img/HH24.jpg)
 
 https://jean-baptiste-faure.blogspot.com/2015/12/herbig-haro-object-24-hh-24.html
 
-![cassini sees moon disturbing the rings of Saturn](./img/disturbedSaturnRing.jpg)
+![cassini sees moon disturbing the rings of Saturn](../img/disturbedSaturnRing.jpg)
 
 ## Ray-marched Modulo Fractals
 
@@ -97,7 +97,7 @@ https://jean-baptiste-faure.blogspot.com/2015/12/herbig-haro-object-24-hh-24.htm
   - Warm/cold feedback can come from color changes as the user gets closer to the correct pose.
 - This game state would be more focused on mind-body connection because they have to individually move specific limbs in specific directions to 'travel' on the psychic plane.
 
-![non-interactive speed](./img/raymarchedFractal.jpg)
+![non-interactive speed](../img/raymarchedFractal.jpg)
 http://blog.hvidtfeldts.net/index.php/2015/01/path-tracing-3d-fractals/
 
 More info;

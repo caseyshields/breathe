@@ -51,6 +51,10 @@
 
 - I think I'm doing the motion blur wrong; I should just make the skelton look like the silhouette and have in render into that cumulative image buffer...
 
+- GameSessions fields are populated by index.js?
+
+- How does GameSession.PoseLandmarks get updated by MediaPipe?
+
 # Heartbeat Solutions;
 
 - Heartbeat is another bio-rhythm which we might try to embody on the screen 
