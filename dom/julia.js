@@ -134,9 +134,6 @@ export default class Julia {
 
   // TODO differential versions of the setters?
   // TODO resize image?
-
-  // get colorMapOffset() {return this._offset;}
-  // set colorMapOffset(d) {this._offset = d;}
   
   get greenOffset() {return this._dG;}
   set greenOffset(d) {this._dG = d;}
