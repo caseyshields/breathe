@@ -126,6 +126,8 @@ export default class Julia {
   /** @returns the size of a pixel in the complex plane */
   get scale() { return this._scale; }
 
+  get width() { return 2*this._width; }
+
   // TODO differential versions of the setters?
   // TODO resize image?
 }

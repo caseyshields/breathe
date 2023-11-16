@@ -25,10 +25,10 @@
   <main id="sketch">
   </main>
   <aside>
-    <div id="mouseCoordinates"></div>
+    <!-- <div id="mouseCoordinates"></div> -->
     <div id="origin"></div>
     <div id="control"></div>
-    <div id="scale"></div>
+    <!-- <div id="scale"></div> -->
     <ul>
       <li>pan camera by dragging left mouse</li>
       <li>scale image with mousewheel</li>
@@ -40,6 +40,7 @@
 <script type="module">
   import Breath from "./breath.js";
   import Julia from "./julia.js";
+  import Menu from "./menu.js";
 
   let coordinates = document.getElementById("mouseCoordinates");
   let originDiv = document.getElementById("origin");
@@ -51,16 +52,17 @@
   const s = (p5) => {
     let width = 512;
     let height = 512;
-    let emptyColor = p5.color(0,255,0);
-    let fullColor = p5.color(0,0,255);
+    let canvas;// = p5.createCanvas(width, height);
     let breathing = new Breath(2000,2000,2000,2000);
     let julia = new Julia(p5, width, height);
     let zoom = 1; // should this just be just be part of julia...
+    let main = p5.select("#sketch");
+    let menu;
 
     p5.setup = function() {
       p5.pixelDensity(1);
       p5.frameRate(10);
-      const canvas = p5.createCanvas(width, height);
+      canvas = p5.createCanvas(width, height);
       canvas.elt.addEventListener('contextmenu', (e)=>e.preventDefault());
       
       julia.position = [0,0];
@@ -68,6 +70,14 @@
       julia.scale = 1/width;
 
       breathing.play();
+
+      menu = new Menu(p5, main, julia);
+      p5.mouseWheel = function(e) {
+        menu.mouseWheel(e);
+      }
+      p5.mouseMoved = function(e) {
+        menu.mouseMoved(e);
+      }
     }
 
     p5.draw = function() {
@@ -97,25 +107,25 @@
       julia.update();
       p5.image(julia.image,0,0);
     }
-    // the mousewheel updates the fractal zoom
-    p5.mouseWheel = function(event) {
-      if (event.delta<0)
-        zoom *= 0.9;
-      else if (event.delta>0)
-        zoom *= 1.1;
-      julia.scale = zoom / width;
-      scaleDiv.innerText = "scale = "+julia.scale;
-    }
+    // // the mousewheel updates the fractal zoom
+    // p5.mouseWheel = function(event) {
+    //   if (event.delta<0)
+    //     zoom *= 0.9;
+    //   else if (event.delta>0)
+    //     zoom *= 1.1;
+    //   julia.scale = zoom / width;
+    //   scaleDiv.innerText = "scale = "+julia.scale;
+    // }
     // 
-    p5.mouseMoved = function(event) {
-      let M = [p5.mouseX, p5.mouseY];
-      let I = julia.screenToImage(M);
-      let M2 = julia.imageToScreen(I);
-      coordinates.innerText = "mouse = ("+I[0]+", "+I[1]+"i)";
-      // DEBUG
-      // if (M[0]!=M2[0] || M[1]!=M2[1])
-      //   console.error(M,I,M2);
-    }
+    // p5.mouseMoved = function(event) {
+    //   let M = [p5.mouseX, p5.mouseY];
+    //   let I = julia.screenToImage(M);
+    //   let M2 = julia.imageToScreen(I);
+    //   coordinates.innerText = "mouse = ("+I[0]+", "+I[1]+"i)";
+    //   // DEBUG
+    //   // if (M[0]!=M2[0] || M[1]!=M2[1])
+    //   //   console.error(M,I,M2);
+    // }
   }
   let sketch = new p5(s, "#sketch")
 </script>
