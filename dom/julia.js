@@ -22,6 +22,11 @@ export default class Julia {
     this._escape = 1e10; // if the iterated function grows larger than this, we consider it divergent
     this._maxIteration = 512; // if the function iterates this many times we assume it never will
     this._image = p5.createImage(width,height);
+
+    // this._offset = 0;
+    // this._dR = 0;
+    this._dG = 0;
+    this._dB = 0; 
   }
 
   /** Renders an image of the fractal using the current origin, control and scale. */
@@ -56,10 +61,9 @@ export default class Julia {
             && iteration < this._maxIteration)
 
         // map it to a color
-        let breathvalue = 0.5;
         this._image.pixels[n] = 0;
-        this._image.pixels[n+1] = 8*Math.abs((((32*breathvalue)+iteration)%32)-16);
-        this._image.pixels[n+2] = 16*Math.abs((((16*breathvalue)+iteration)%16)-8);
+        this._image.pixels[n+1] = 8*Math.abs((((32*this._dG)+iteration)%32)-16);
+        this._image.pixels[n+2] = 16*Math.abs((((16*this._dB)+iteration)%16)-8);
         this._image.pixels[n+3] = 255;
         // I think this can be more optimized...
         // TODO We need to remove the dependence on breath;
@@ -130,4 +134,13 @@ export default class Julia {
 
   // TODO differential versions of the setters?
   // TODO resize image?
+
+  // get colorMapOffset() {return this._offset;}
+  // set colorMapOffset(d) {this._offset = d;}
+  
+  get greenOffset() {return this._dG;}
+  set greenOffset(d) {this._dG = d;}
+
+  get blueOffset() {return this._dB;}
+  set blueOffset(d) {return this._dB = d;}
 }

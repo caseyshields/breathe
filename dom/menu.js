@@ -7,77 +7,60 @@ export default class menu {
     fractal; // the julia fractal this menu controls
 
     div;
-    control;
-    center;
-    scale;
-    mouse;
-
-    zoom = 1;
-
+    green;
+    blue;
 
     constructor(instance, parent, julia) {
         this.p5 = instance;
         this.main = parent;
         this.fractal = julia;
         
-        this.div = this.p5.createDiv('testing');
+        this.div = this.p5.createDiv('Color Mapping');
         this.div.parent(this.main);
-        this.div.id("#menu");
-        //this.div.class('hidden');
+        this.div.id("color");
+        this.div.class('menu');
 
-        this.center = this.p5.createDiv();
-        this.center.parent(this.div);
-        this.center.id('center');
-
-        this.control = this.p5.createDiv();
-        this.control.parent(this.div);
-        this.control.id('control');
-
-        this.scale = this.p5.createDiv();
-        this.scale.parent(this.div);
-        this.scale.id('scale');
-
-        this.mouse = this.p5.createDiv();
-        this.mouse.parent(this.div);
-        this.mouse.id('mouse');
-
-        let slider = this.p5.createSlider(1, 100, 1, 1); // min max value step
-        slider.parent(this.div);
-        slider.id('#zoom');
-        slider.input( (e)=>{
-            let z = Math.pow(0.9, slider.value());
-            this.fractal.scale = z/this.fractal.width;
+        this.div.child( this.p5.createElement('br') );
+        
+        this.div.child( this.p5.createSpan('Green Offset:') );
+        this.green = this.p5.createSlider(0, 100, 0, 1); // min max value step
+        this.green.parent(this.div);
+        this.green.id('green');
+        this.green.input( (e)=>{
+            let d = this.green.value()/100.0;
+            this.fractal.greenOffset = d;
         });
 
-        // elements can be hidden and shown
-        let check = this.p5.createCheckbox('menu', true );
-        check.parent(this.main);
-        check.changed( (e)=>{
-            if (check.checked())
-                this.div.show();
-            else this.div.hide();
+        this.div.child( this.p5.createElement('br') );
+
+        this.div.child( this.p5.createSpan('Blue Offset:') );
+        this.blue = this.p5.createSlider(0,100,0,1);
+        this.blue.parent(this.div);
+        this.blue.id('blue');
+        this.blue.input( (e)=>{
+            let b = this.blue.value()/100.0;
+            this.fractal.blueOffset = b;
         });
+
     }
 
-    // the mousewheel updates the fractal zoom
-    mouseWheel(event) {
-        if (event.delta<0)
-            this.zoom *= 0.9;
-        else if (event.delta>0)
-            this.zoom *= 1.1;
-        this.fractal.scale = this.zoom / this.fractal.width;
-        this.scale.html("scale = "+this.fractal.scale);
+    get div() {return this.div;}
+    get blueOffset() {return this.blue.value()/100;}
+    get greenOffset() {return this.green.value()/100;}
+
+    set blueOffset(offset) {
+        if (offset<0)
+            offset = 0;
+        else if (offset>1)
+            offset = 1;
+        this.blue.value(offset*100.0);
     }
 
-    // 
-    mouseMoved(event) {
-        let M = [this.p5.mouseX, this.p5.mouseY];
-        let I = this.fractal.screenToImage(M);
-        let M2 = this.fractal.imageToScreen(I);
-        this.mouse.html( "mouse = ("+I[0]+", "+I[1]+"i)");
-        // coordinates.innerText = "mouse = ("+I[0]+", "+I[1]+"i)";
-        // DEBUG
-        // if (M[0]!=M2[0] || M[1]!=M2[1])
-        //   console.error(M,I,M2);
+    set greenOffset(offset) {
+        if (offset<0)
+            offset = 0;
+        else if (offset>1)
+            offset = 1;
+        this.green.value(offset*100.0);
     }
 }

@@ -4,13 +4,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>p5.js example</title>
+  <title>P5 DOM Interaction Example</title>
   <style>
     body {
       padding: 0;
       margin: 0;
       background-color: #1b1b1b;
       color: aliceblue;
+    }
+    .menu {
+      border: aliceblue 1px solid;
+      border-radius: 1em;
+      padding: 1em;
+      margin: 1em;
     }
   </style>
   <script src="../p5/p5.min.js"></script>
@@ -21,19 +27,21 @@
 </head>
 
 <body>
-  <h1>Julia Set</h1>
   <main id="sketch">
   </main>
   <aside>
-    <!-- <div id="mouseCoordinates"></div> -->
-    <div id="origin"></div>
-    <div id="control"></div>
-    <!-- <div id="scale"></div> -->
-    <ul>
+    <div id="coordinates" class="menu">
+      Fractal Coordinates
+      <div id="mouse"></div>
+      <div id="origin"></div>
+      <div id="control"></div>
+      <div id="scale"></div>
+    </div>
+    <!-- <ul>
       <li>pan camera by dragging left mouse</li>
       <li>scale image with mousewheel</li>
       <li>move control point by dragging right mouse</li>
-    </ul>
+    </ul> -->
   </aside>
 </body>
 
@@ -42,7 +50,8 @@
   import Julia from "./julia.js";
   import Menu from "./menu.js";
 
-  let coordinates = document.getElementById("mouseCoordinates");
+  // let 
+  let mouse = document.getElementById("mouse");
   let originDiv = document.getElementById("origin");
   let controlDiv = document.getElementById("control");
   let scaleDiv = document.getElementById("scale");
@@ -72,12 +81,21 @@
       breathing.play();
 
       menu = new Menu(p5, main, julia);
-      p5.mouseWheel = function(e) {
-        menu.mouseWheel(e);
-      }
-      p5.mouseMoved = function(e) {
-        menu.mouseMoved(e);
-      }
+      // p5.mouseWheel = function(e) {
+      //   menu.mouseWheel(e);
+      // }
+      // p5.mouseMoved = function(e) {
+      //   menu.mouseMoved(e);
+      // }
+
+      // elements can be hidden and shown
+      // menu.div.hide();
+      let check = p5.createCheckbox('menu', true );
+        check.changed( (e)=>{
+            if (check.checked())
+                menu.div.show();
+            else menu.div.hide();
+        });
     }
 
     p5.draw = function() {
@@ -107,25 +125,25 @@
       julia.update();
       p5.image(julia.image,0,0);
     }
-    // // the mousewheel updates the fractal zoom
-    // p5.mouseWheel = function(event) {
-    //   if (event.delta<0)
-    //     zoom *= 0.9;
-    //   else if (event.delta>0)
-    //     zoom *= 1.1;
-    //   julia.scale = zoom / width;
-    //   scaleDiv.innerText = "scale = "+julia.scale;
-    // }
-    // 
-    // p5.mouseMoved = function(event) {
-    //   let M = [p5.mouseX, p5.mouseY];
-    //   let I = julia.screenToImage(M);
-    //   let M2 = julia.imageToScreen(I);
-    //   coordinates.innerText = "mouse = ("+I[0]+", "+I[1]+"i)";
-    //   // DEBUG
-    //   // if (M[0]!=M2[0] || M[1]!=M2[1])
-    //   //   console.error(M,I,M2);
-    // }
+    // the mousewheel updates the fractal zoom
+    p5.mouseWheel = function(event) {
+      if (event.delta<0)
+        zoom *= 0.9;
+      else if (event.delta>0)
+        zoom *= 1.1;
+      julia.scale = zoom / width;
+      scaleDiv.innerText = "scale = "+julia.scale;
+    }
+    
+    p5.mouseMoved = function(event) {
+      let M = [p5.mouseX, p5.mouseY];
+      let I = julia.screenToImage(M);
+      let M2 = julia.imageToScreen(I);
+      mouse.innerText = "mouse = ("+I[0]+", "+I[1]+"i)";
+      // DEBUG
+      // if (M[0]!=M2[0] || M[1]!=M2[1])
+      //   console.error(M,I,M2);
+    }
   }
   let sketch = new p5(s, "#sketch")
 </script>
