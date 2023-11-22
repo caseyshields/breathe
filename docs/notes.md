@@ -55,6 +55,12 @@
 
 - How does GameSession.PoseLandmarks get updated by MediaPipe?
 
+- the p5 instance is passed throughout the game via the singleton object GameSession. this instance is needed by anything declaring a color or vector, so pretty fundamental.
+  - However the singleton constructor only sets the p5 instance to an anonymous object!
+  - It isn't until the end of the 'index.js' script that it reaches into the game session and sets the session's p5 instance to the one used at the top level.
+  - this means for a host of game objects, such as those being created at the same time as a GameState, GameSession's p5 instance is a '{}'!
+  - can we improve this to be more intuitive? things like declaring default color are impossible at construction and instead have to be done in a setup() method which has to be properly chained from the GameState...
+
 # Heartbeat Solutions;
 
 - Heartbeat is another bio-rhythm which we might try to embody on the screen 
