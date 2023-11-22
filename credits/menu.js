@@ -12,8 +12,6 @@ const component = 'credits';
         <dt></dt>
         <dd></dd>
     </dl>
-    <article class="credit">
-    </article>
 </section
 */
 export default class menu {
@@ -21,32 +19,43 @@ export default class menu {
     p5; // the global p5 instance
     main; // the containing P5.element
     
+    data;
+
     section;
     header;
     navigation;
-    div;
+    list;
 
-    constructor(p5, parent, julia) {
+    constructor(p5, parent, data) {
         this.p5 = p5;
         this.main = parent;
-        this.fractal = julia;
+        this.data = data;
 
-        this.section = p5.createElement('section', "section");
+        this.section = p5.createElement('section');
         this.section.class(component);
         // this.section.id('');
         this.section.parent(parent);
 
-        this.header = p5.createElement('header', "header");
+        this.header = p5.createElement('header');
         this.header.parent(this.section);
         this.header.class(component);
+        this.header.child( p5.createElement('h1', 'Credits') );
 
-        this.navigation = p5.createElement('nav', 'navigation')
+        this.navigation = p5.createElement('nav');
         this.navigation.parent(this.section);
         this.navigation.class(component);
+        this.navigation.child( p5.createElement('span','nav\ntodo'))
 
-        this.div = p5.createDiv('entries');
-        this.div.parent(this.section);
-        this.div.class(component);
+        this.list = p5.createElement('dl');
+        this.list.parent(this.section);
+        this.list.class(component);
+
+        for (let credit of data) {
+            let term = p5.createElement('dt', credit.name);
+            let def = p5.createElement('dd', credit.role)
+            this.list.child(term);
+            this.list.child(def);
+        }
     }
 
     get section() {return this.section;}
