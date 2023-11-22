@@ -1,66 +1,56 @@
-/** Trying out P5 interaction with the DOM */
 
+const component = 'credits';
+
+/** Proof of concept for programmatically creating game menus in the DOM
+ * 
+<section class="credit">
+    <header class="credit">
+    </header>
+    <nav class="credit">
+    </nav>
+    <dl>
+        <dt></dt>
+        <dd></dd>
+    </dl>
+    <article class="credit">
+    </article>
+</section
+*/
 export default class menu {
 
     p5; // the global p5 instance
     main; // the containing P5.element
-    fractal; // the julia fractal this menu controls
-
+    
+    section;
+    header;
+    navigation;
     div;
-    green;
-    blue;
 
-    constructor(instance, parent, julia) {
-        this.p5 = instance;
+    constructor(p5, parent, julia) {
+        this.p5 = p5;
         this.main = parent;
         this.fractal = julia;
-        
-        this.div = this.p5.createDiv('Color Mapping');
-        this.div.parent(this.main);
-        this.div.id("color");
-        this.div.class('menu');
 
-        this.div.child( this.p5.createElement('br') );
-        
-        this.div.child( this.p5.createSpan('Green Offset:') );
-        this.green = this.p5.createSlider(0, 100, 0, 1); // min max value step
-        this.green.parent(this.div);
-        this.green.id('green');
-        this.green.input( (e)=>{
-            let d = this.green.value()/100.0;
-            this.fractal.greenOffset = d;
-        });
+        this.section = p5.createElement('section', "section");
+        this.section.class(component);
+        // this.section.id('');
+        this.section.parent(parent);
 
-        this.div.child( this.p5.createElement('br') );
+        this.header = p5.createElement('header', "header");
+        this.header.parent(this.section);
+        this.header.class(component);
 
-        this.div.child( this.p5.createSpan('Blue Offset:') );
-        this.blue = this.p5.createSlider(0,100,0,1);
-        this.blue.parent(this.div);
-        this.blue.id('blue');
-        this.blue.input( (e)=>{
-            let b = this.blue.value()/100.0;
-            this.fractal.blueOffset = b;
-        });
+        this.navigation = p5.createElement('nav', 'navigation')
+        this.navigation.parent(this.section);
+        this.navigation.class(component);
 
+        this.div = p5.createDiv('entries');
+        this.div.parent(this.section);
+        this.div.class(component);
     }
 
-    get div() {return this.div;}
-    get blueOffset() {return this.blue.value()/100;}
-    get greenOffset() {return this.green.value()/100;}
+    get section() {return this.section;}
 
-    set blueOffset(offset) {
-        if (offset<0)
-            offset = 0;
-        else if (offset>1)
-            offset = 1;
-        this.blue.value(offset*100.0);
-    }
-
-    set greenOffset(offset) {
-        if (offset<0)
-            offset = 0;
-        else if (offset>1)
-            offset = 1;
-        this.green.value(offset*100.0);
-    }
+    hide() {this.section.style('display', 'none');}
+    show() {this.section.style('display', '');}
 }

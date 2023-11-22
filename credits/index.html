@@ -18,6 +18,55 @@
       padding: 1em;
       margin: 1em;
     }
+
+    section.credits {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: calc(512px - 4em);
+      width: calc(512px - 4em);
+
+      padding: 1em;
+      margin: 1em;
+      border-radius: 1em;
+      border: 2px #D9D9D9 solid;
+
+      display: grid;
+      grid-template-columns: 20% 1fr;
+      grid-template-rows: 80px 1fr;
+      grid-template-areas:
+        "header header"
+        "navigation entries";
+    }
+    section.credits > header {
+      grid-area: header;
+    }
+    section.credits > nav {
+      grid-area: navigation;
+    }
+    section.credits > div {
+      grid-area: entries;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 47px;
+    }
+
+    h1 {
+      color: #fff;
+      font-size: 80px;
+      font-weight: 400;
+    }
+    h2 {
+      color: #3dec1c;
+      font-size: 48px;
+      font-weight: 400;
+    }
+    h3 {
+      color: #D9D9D9;
+      font-size: 48px;
+      font-weight: 400;
+    }
   </style>
   <script src="../p5/p5.min.js"></script>
   <script type="module" src="./breath.js"></script>
@@ -66,8 +115,8 @@
       let check = p5.createCheckbox('menu', true );
         check.changed( (e)=>{
             if (check.checked())
-                menu.div.show();
-            else menu.div.hide();
+                menu.show();
+            else menu.hide();
         });
     }
 
