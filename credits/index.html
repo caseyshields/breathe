@@ -27,8 +27,9 @@
 
 <script type="module">
   import Breath from "./breath.js";
-  import Menu from "./menu.js";
+  import Credits from "./credits.js";
 
+  // TODO load this from some file
   const data = [
       {name:'Sam Shields', role:'Producer, Research, Gameplay Programmer'},
       {name:'Casey Shields', role:'Gameplay Programmer'},
@@ -43,9 +44,7 @@
     let canvas;// = p5.createCanvas(width, height);
     let breathing = new Breath(2000,2000,2000,2000);
     let main = p5.select("#sketch");
-    let menu;
-    let emptyColor = p5.color(0,128,64,255);
-    let fullColor = p5.color(0,255,255, 128);
+    let credits;
 
     p5.setup = function() {
 
@@ -56,28 +55,24 @@
       
       breathing.play();
 
-      menu = new Menu(p5, main, data);
-      // p5.mouseWheel = function(e) {
-      //   menu.mouseWheel(e);
-      // }
-      // p5.mouseMoved = function(e) {
-      //   menu.mouseMoved(e);
-      // }
+      credits = new Credits(p5, main, data);
 
-      // elements can be hidden and shown
-      // menu.div.hide();
+      // make a checkbox that can show and hide the credit page
       let check = p5.createCheckbox('menu', true );
         check.changed( (e)=>{
             if (check.checked())
-                menu.show();
-            else menu.hide();
+                credits.show();
+            else credits.hide();
         });
     }
 
+    // Just do something in the background so we can demonstrate overlaying the credits
     p5.draw = function() {
+      const emptyColor = p5.color(0,128,64,255);
+      const fullColor = p5.color(0,255,255, 128);
+      const radius = 100;
+      const amp = 100;
 
-      let radius = 100;
-      let amp = 100;
       breathing.update(p5.deltaTime);
       let value = breathing.value;
 
