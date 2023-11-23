@@ -1,4 +1,5 @@
 section.credits {
+    /* Just some static positioning. In reality it will stretch to screen, but the demo is 512x512 */
     position: absolute;
     left: 0;
     top: 0;
@@ -7,9 +8,8 @@ section.credits {
     padding: 1em;
     margin: 1em;
     border-radius: 1em;
-    border: 2px #D9D9D9 solid;
-    background-color: #1b1b1b88;
 
+    /* Grid layout which will resize to any screen size */
     display: grid;
     grid-template-columns: 20% 1fr;
     grid-template-rows: 80px 1fr;
@@ -17,19 +17,39 @@ section.credits {
       "header header"
       "navigation entries";
 
+    /* General styling */
+    border: 2px #D9D9D9 solid;
+    background-color: #1b1b1b88;
     font-family: Oswald;
     align-content: center;
     justify-content: center;
   }
 
+  /* header for the credits page */
   section.credits > header {
     grid-area: header;
   }
+  
+  section.credits h1 {
+    color: #fff;
+    text-align: center;
+    font-size: 2em;
+    font-weight: 400;
+    /* font-size: 80px;
+    font-weight: 400; */
+  }
 
+  /* Navigation bar for the credits page*/
   section.credits > nav {
     grid-area: navigation;
   }
 
+  section.credits h2 {
+    color: #D9D9D9;
+    font-size: 1em;
+  }
+
+  /* A definition list is used for the credit entries. Not sure if this is semantically proper. */
   section.credits > dl {
     grid-area: entries;
     display: flex;
@@ -39,21 +59,7 @@ section.credits {
     gap: 1em;
   }
 
-  h1 {
-    color: #fff;
-    text-align: center;
-    font-size: 2em;
-    font-weight: 400;
-    /* font-size: 80px;
-    font-weight: 400; */
-  }
-
-  h2 {
-    color: #D9D9D9;
-    font-size: 1em;
-  }
-
-  dt {
+  section.credits dt {
     color: #3dec1c;
     font-size: 1em;
     font-weight: 400;
@@ -61,7 +67,7 @@ section.credits {
     font-weight: 400; */
   }
 
-  dd {
+  section.credits dd {
     color: #D9D9D9;
     font-size: 1em;
     font-weight: 400;
