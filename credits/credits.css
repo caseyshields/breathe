@@ -18,7 +18,11 @@ section.credits {
     padding: 1em;
     margin: 1em;
     border-radius: 1em;
+
+    /* Lower bound for resizing */
     overflow: hidden;
+    min-width: calc(512px - 4em);
+    min-height: calc(512px - 4em);
 
     /* Grid layout which will resize to any screen size 
        Browser developer tool can draw this on the screen and interactively update while you edit! */
@@ -47,8 +51,6 @@ section.credits {
     text-align: center;
     font-size: 2em;
     font-weight: 400;
-    /* font-size: 80px;
-    font-weight: 400; */
   }
 
   /* Navigation bar for the credits page*/
@@ -67,23 +69,19 @@ section.credits {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* gap: 47px; */
-    gap: 1em;
+    gap: 0.5em;
   }
 
   section.credits dt {
     color: #3dec1c;
     font-size: 1em;
     font-weight: 400;
-    /* font-size: 48px;
-    font-weight: 400; */
   }
 
   section.credits dd {
     color: #D9D9D9;
     font-size: 1em;
     font-weight: 400;
-    /* font-size: 48px;
-    font-weight: 400; */
     margin-left:0;
+    margin-bottom: 1.5em;
   }
