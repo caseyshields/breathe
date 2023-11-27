@@ -1,15 +1,27 @@
+/* Put the menu toggle atop everything so the user can click it. */
+label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 1em;
+  margin: 1em;
+  z-index: 9001;
+}
+
+/* The entire menu can just be laid atop the canvas, and be made reactive with basic CSS. */
 section.credits {
-    /* Just some static positioning. In reality it will stretch to screen, but the demo is 512x512 */
     position: absolute;
     left: 0;
     top: 0;
-    height: calc(512px - 4em);
-    width: calc(512px - 4em);
+    height: calc(100% - 4em);
+    width: calc(100% - 4em);
     padding: 1em;
     margin: 1em;
     border-radius: 1em;
+    overflow: hidden;
 
-    /* Grid layout which will resize to any screen size */
+    /* Grid layout which will resize to any screen size 
+       Browser developer tool can draw this on the screen and interactively update while you edit! */
     display: grid;
     grid-template-columns: 20% 1fr;
     grid-template-rows: 80px 1fr;
@@ -25,7 +37,7 @@ section.credits {
     justify-content: center;
   }
 
-  /* header for the credits page */
+  /* header for the credits page. Basically just links the html header tag with the grid template area! */
   section.credits > header {
     grid-area: header;
   }
