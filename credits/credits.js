@@ -6,10 +6,17 @@ const component = 'credits';
 <section class="credit">
     <header><h1> Credits </h1></header>
     <nav> todo
+        <a href="">topic 1</a>
+        <a href="">topic 2</a>
+        ...
     </nav>
     <dl>
-        <dt> name </dt>
-        <dd> role </dd>
+        <dt> name 1 </dt>
+        <dd> role 1 </dd>
+        <dt> name 2 </dt>
+        <dd> role 2 </dd>
+        <dt> name 3 </dt>
+        <dd> role 3 </dd>
         ...
     </dl>
 </section>
