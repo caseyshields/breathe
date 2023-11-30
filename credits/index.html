@@ -33,7 +33,7 @@
   import Breath from "./breath.js";
   import Credits from "./credits.js";
 
-  // TODO load this from some file
+  // Here is the configuration data for the credit section
   const data = [
       {name:'Sam Shields', role:'Producer, Research, Gameplay Programmer'},
       {name:'Casey Shields', role:'Gameplay Programmer'},
@@ -41,26 +41,32 @@
       {name:'Andrew Li', role:'UI/UX Designer'},
       {name:'Franky Dominguez', role:'Research'},
       {name:'Ramon Rubio', role:'Project Management'}
-  ] // TODO break these into named sections...
+  ]
+  // TODO load this from some file
+  // TODO break these into named, navigable sections...
 
-
+  // Create the P5 instance and relevant components
   const s = (p5) => {
     let width = 512;
     let height = 512;
-    let canvas;// = p5.createCanvas(width, height);
-    let breathing = new Breath(2000,2000,2000,2000);
-    let main = p5.select("#sketch");
-    let credits;
+    let canvas; // where the P5 graphics are drawn
+    let breathing; // a component for tracking breath
+    let credits; // a component for displaying credits
 
     p5.setup = function() {
 
+      // Configure the P5 canvas
       p5.pixelDensity(1);
       p5.frameRate(30);
       canvas = p5.createCanvas(width, height);
       canvas.elt.addEventListener('contextmenu', (e)=>e.preventDefault());
       
+      // create and start the breathing guide
+      breathing = new Breath(1500,1500,1500,1500);
       breathing.play();
 
+      // find the main element, then create and add the credits section
+      let main = p5.select("#sketch");
       credits = new Credits(p5, main, data);
 
       // make a checkbox that can show and hide the credit page
